@@ -15,7 +15,7 @@ def loadNumbers():
 
 def merge(left, right):
 	"""
-	left: sorted list of integers 
+	left: sorted list of integers
 	right: sorted list of integers
 	returns: a new sorted list by merging left and right
 	"""
@@ -77,24 +77,100 @@ def CountInv(input_list, n):
 	return count
 
 
+def sortAndCount(input_list, list_size):
+	"""
+	input_list: list of integers
+	list_size: length/size of inputList
+	returns: the number of inversions in inputList and sorts input_list
+
+	! imp : does not return new list, sorts the input list
+	Time Complexity: O[n*log(n)]
+	"""
+	temp_list = [0]*list_size
+	return _sortAndCount(input_list, temp_list, 0, list_size - 1)
+
+
+def _sortAndCount(input_list, temp_list, left, right):
+    """
+    helper recursive function to sort the input array and return the number of
+    inversions
+
+    input_list: list of integers
+    temp_list: temp list
+    left: integer, identifies starting index of part of the list to be sorted
+    right: integer, identifies ending index of part of the list to be sorted
+    returns: the number of inversions in inputList and sorts input_list
+
+    ! imp : does not return new list, sorts the input list
+    """
+    inv_count = 0
+    if (right > left):
+        # Divide the array into two parts and call _mergeSortAndCountInv()
+        # for each of the parts
+        mid = (right + left)/2
+        # Inversion count will be sum of inversions in left-part, right-part
+        #  and number of inversions in merging
+
+        inv_count  = _sortAndCount(input_list, temp_list, left, mid)
+        inv_count += _sortAndCount(input_list, temp_list, mid+1, right)
+
+        # Merge the two parts
+        inv_count += countSplitInv(input_list, temp_list, left, mid+1, right)
+    return inv_count
+
+
+def countSplitInv(input_list, temp_list, left, mid, right):
+    inv_count = 0;
+
+    i = left; # i is index for left subarray*/
+    j = mid;  # j is index for right subarray*/
+    k = left; # k is index for resultant merged subarray*/
+
+    while ((i <= mid - 1) and (j <= right)):
+        if (input_list[i] <= input_list[j]):
+        	temp_list[k] = input_list[i]
+        	k+=1
+        	i+=1
+        else:
+        	temp_list[k] = input_list[j]
+        	k+=1
+        	j+=1
+        	inv_count = inv_count + (mid - i)
+
+    # Copy the remaining elements of left subarray
+    # (if there are any) to temp*/
+    while (i <= mid - 1):
+    	temp_list[k] = input_list[i]
+    	k+=1
+    	i+=1
+
+    # Copy the remaining elements of right subarray
+    # (if there are any) to temp*/
+    while (j <= right):
+    	temp_list[k] = input_list[j]
+    	k+=1
+    	j+=1
+
+    # Copy back the merged elements to original array*/
+    for i in range(left, right+1):
+    	input_list[i] = temp_list[i];
+
+    return inv_count
 
 
 testList1 = [2,5,6,1,3,9,7]
 testList2 = [1,3,5,2,4,6]
 
 
-
-
 if __name__ == "__main__":
-	print(mergeSort(testList1))
-	print(mergeSort(testList2))
-	print(mergeSort(loadNumbers()))
-	# print(SortAndMerge(testList1))
-	# print(SortAndMerge(testList2))
-	# print("Brute force on testList1", CountInv(testList1, 7))
-	# print("Brute force on testList2", CountInv(testList2, 6))
-	# print(CountInv(loadNumbers(), 100000))
-	# print(countSplitInv([2,5,6,1], [3,9,7]))
-	# print(countSplitInv([1,3,5], [2,4,6]))
-	# print("Fast way on testList1", Count(testList1, 7))
-	# print("Fast way on testList2", Count(testList2, 6))
+	print(mergeSort(testList1)) # Runs fine
+	print(mergeSort(testList2)) # Runs fine
+	# print(mergeSort(loadNumbers()))
+
+	print("Brute force on testList1", CountInv(testList1, 7))
+	print("Brute force on testList2", CountInv(testList2, 6))
+	# print('Brute force on text file', CountInv(loadNumbers(), 100000))
+
+	print("Fast way on testList1", sortAndCount(testList1, 7)) # Infinite loop
+	print("Fast way on testList2", sortAndCount(testList2, 6))
+	print('Fast way on text file', sortAndCount((loadNumbers()), 100000))
