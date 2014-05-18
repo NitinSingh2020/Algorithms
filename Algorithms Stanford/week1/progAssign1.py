@@ -17,7 +17,7 @@ def merge(left, right):
 	"""
 	left: sorted list of integers 
 	right: sorted list of integers
-	returns: sorted merge list of left and right
+	returns: a new sorted list by merging left and right
 	"""
 	result = []
 	while len(left) > 0 or len(right) > 0:
@@ -46,17 +46,17 @@ def mergeSort(input_list):
 	if len(input_list) <= 1:
 		return input_list
 
-	left_list = []
-	right_list = []
 	middle_num = int(math.ceil(len(input_list) / 2.0))
 
-	for num in range(middle_num):
-		left_list.append(input_list[num])
-	for num in range(middle_num, len(input_list)):
-		right_list.append(input_list[num])
+	# Split list into two halves
+	left_list = input_list[0:middle_num]
+	right_list = input_list[middle_num:]
 
+	# Recursive call
 	left_list = mergeSort(left_list)
 	right_list = mergeSort(right_list)
+
+	# Merge the two sorted lists
 	result = merge(left_list, right_list)
 	return result
 
@@ -75,7 +75,6 @@ def CountInv(input_list, n):
 			if (input_list[i] > input_list[j]):
 				count += 1
 	return count
-
 
 
 
