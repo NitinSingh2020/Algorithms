@@ -4,20 +4,20 @@ PATH_TO_FILE = 'ProgAssign1.txt'
 def loadNumbers():
 	"""
 	reads txt file
-	returns: array/list of int in file
+	returns: array/list of integers in file
 	"""
 	lines = open(PATH_TO_FILE, 'r', 0).read().splitlines()
-	numberList = []
+	number_list = []
 	for a in lines:
-		numberList.append(int(a))
-	return numberList
+		number_list.append(int(a))
+	return number_list
 
 
 def merge(left, right):
 	"""
-	left: list of int
-	right: list of int
-	returns: sorted merge list 
+	left: sorted list of integers 
+	right: sorted list of integers
+	returns: sorted merge list of left and right
 	"""
 	result = []
 	while len(left) > 0 or len(right) > 0:
@@ -29,41 +29,41 @@ def merge(left, right):
 				result.append(right[0])
 				right = right[1:]
 		elif len(left) > 0:
-			result.append(left[0])
-			left = left[1:]
+			result = result + left
+			left = []
 		elif len(right) > 0:
-			result.append(right[0])
-			right = right[1:]
+			result = result + right
+			right = []
 	return result
 
 
-def mergeSort(inputList):
+def mergeSort(input_list):
 	"""
-	inputList: list of integers to be sorted in increasing order
+	input_list: list of integers to be sorted in increasing order
 	returns: a new list sorted in increasing order
 	Time Complexity: O[nlog(n)]
 	"""
-	if len(inputList) <= 1:
-		return inputList
+	if len(input_list) <= 1:
+		return input_list
 
-	leftList = []
-	rightList = []
-	middleNum = int(math.ceil(len(inputList) / 2.0))
+	left_list = []
+	right_list = []
+	middle_num = int(math.ceil(len(input_list) / 2.0))
 
-	for num in range(middleNum):
-		leftList.append(inputList[num])
-	for num in range(middleNum, len(inputList)):
-		rightList.append(inputList[num])
+	for num in range(middle_num):
+		left_list.append(input_list[num])
+	for num in range(middle_num, len(input_list)):
+		right_list.append(input_list[num])
 
-	leftList = mergeSort(leftList)
-	rightList = mergeSort(rightList)
-	result = merge(leftList, rightList)
+	left_list = mergeSort(left_list)
+	right_list = mergeSort(right_list)
+	result = merge(left_list, right_list)
 	return result
 
 
-def CountInv(inputList, n):
+def CountInv(input_list, n):
 	"""
-	inputList: list of integers
+	input_list: list of integers
 	n: length/size of inputList
 	returns: number of invesions in inputList
 
@@ -71,12 +71,13 @@ def CountInv(inputList, n):
 	"""
 	count = 0
 	for i in range(n-1):
-		if (i%1000 == 0):
-			print("Done with step: ", i)
 		for j in range(i+1, n):
-			if (inputList[i] > inputList[j]):
+			if (input_list[i] > input_list[j]):
 				count += 1
 	return count
+
+
+
 
 
 testList1 = [2,5,6,1,3,9,7]
@@ -87,9 +88,14 @@ testList2 = [1,3,5,2,4,6]
 
 if __name__ == "__main__":
 	print(mergeSort(testList1))
-	# print(mergeSort(loadNumbers()))
+	print(mergeSort(testList2))
+	print(mergeSort(loadNumbers()))
 	# print(SortAndMerge(testList1))
 	# print(SortAndMerge(testList2))
-	print(CountInv(testList1, 7))
-	print(CountInv(testList2, 6))
-	print(CountInv(loadNumbers(), 100000))
+	# print("Brute force on testList1", CountInv(testList1, 7))
+	# print("Brute force on testList2", CountInv(testList2, 6))
+	# print(CountInv(loadNumbers(), 100000))
+	# print(countSplitInv([2,5,6,1], [3,9,7]))
+	# print(countSplitInv([1,3,5], [2,4,6]))
+	# print("Fast way on testList1", Count(testList1, 7))
+	# print("Fast way on testList2", Count(testList2, 6))
