@@ -1,5 +1,5 @@
 import math
-PATH_TO_FILE = 'ProgAssign1.txt'
+PATH_TO_FILE = 'IntegerArray.txt'
 
 def loadNumbers():
 	"""
