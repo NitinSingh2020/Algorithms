@@ -29,6 +29,18 @@ def partition(A,left_index,right_index,pivot_index):
 	swap(left_index,store_index-1) # Move pivot to its final place in partioned Array
 	return store_index
 
+def swap(A,m,n):
+	"""
+	A: list of integers
+	m: index of element to be swapped
+	n: index of element to be swapped
+
+	returns: nothing, as a side affect swaps the mth and nth element in A
+	"""
+	temp = A[m]
+	A[m] = A[n]
+	A[n] = temp
+	
 
 if __name__ == "__main__":
 	testList = [2,1,4,6,9,5]
