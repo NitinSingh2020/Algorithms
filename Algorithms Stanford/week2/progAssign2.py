@@ -12,23 +12,25 @@ def loadNumbers():
 		number_list.append(int(a))
 	return number_list
 
-# def quickSort():
-# 	"""
-# 	"""
 
-def partition(A,l,r):
+def partition(A,left_index,right_index,pivot_index):
 	"""
 	A: list of integers
 	l: left index of subarray of A
 	r: right index of subarray of A
 	"""
-	p = A[l]
-	i = l+1
-	for j in range(l+1,r+1):
-		if A[j] < p:
-			swap(A[j], A[i])
-			i = i+1
-	swap(A[l], A[i-1])
+	pivot_value = A[pivot_index]
+	p = A[left_index]
+	store_index = left_index+1
+	for i in range(left_index+1,right_index+1):
+		if A[i] < p:
+			swap(i,store_index)
+			store_index = store_index+1
+	swap(left_index,store_index-1) # Move pivot to its final place in partioned Array
+	return store_index
+
 
 if __name__ == "__main__":
-	print(loadNumbers())
+	testList = [2,1,4,6,9,5]
+	swap(testList,0,5)
+	print(testList)
