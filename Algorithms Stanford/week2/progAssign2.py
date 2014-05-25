@@ -40,7 +40,15 @@ def swap(A,m,n):
 	temp = A[m]
 	A[m] = A[n]
 	A[n] = temp
-	
+
+def choosePivot(choice):
+	"""
+	choice: string describing the chosen pivot
+	returns pivot index per the choice of user 
+	"""
+	pivot_ind_dict = {'first':0, 'last':len(A)}
+
+
 
 if __name__ == "__main__":
 	testList = [2,1,4,6,9,5]
