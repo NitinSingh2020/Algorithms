@@ -12,10 +12,23 @@ def loadNumbers():
 		number_list.append(int(a))
 	return number_list
 
-def quickSort():
-	"""
-	"""
+# def quickSort():
+# 	"""
+# 	"""
 
-	
+def partition(A,l,r):
+	"""
+	A: list of integers
+	l: left index of subarray of A
+	r: right index of subarray of A
+	"""
+	p = A[l]
+	i = l+1
+	for j in range(l+1,r+1):
+		if A[j] < p:
+			swap(A[j], A[i])
+			i = i+1
+	swap(A[l], A[i-1])
+
 if __name__ == "__main__":
 	print(loadNumbers())
