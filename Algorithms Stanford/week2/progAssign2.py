@@ -1,5 +1,7 @@
 import math
 PATH_TO_FILE = 'QuickSort.txt'
+# PATH_TO_FILE = '1000.txt'
+comparisonCount = 0 # Important : Global Variable
 
 def loadNumbers():
 	"""
@@ -48,31 +50,52 @@ def swap(A,m,n):
 	else:
 		return
 
-def choosePivot(A,choice):
+def choosePivotIndex(A,left_index,right_index,choice):
 	"""
 	A: list of integers
 	choice: string describing the chosen pivot
 	returns pivot index per the choice of user 
 	"""
-	pivot_index_dict = {'first':0, 'last':len(A)}
-	return pivot_index_dict[choice]
+	if choice == 'median':	
+		a = A[left_index]
+		b = A[right_index]
+		if (right_index - left_index) % 2 != 0:
+			c_index = left_index + (right_index - left_index -1)/2
+			c = A[c_index]
+		else:
+			c_index = left_index + (right_index - left_index)/2
+			c = A[c_index]
+
+		if (a-b)*(a-c) <= 0:
+			pivot_index = left_index
+		elif (b-a)*(b-c) <= 0:
+			pivot_index = right_index
+		elif (c-b)*(c-a) <= 0:
+			pivot_index = c_index
+	elif choice == 'first':
+		pivot_index = left_index
+	elif choice == 'last':
+		pivot_index = right_index
+
+	return pivot_index
 
 
 def quickSort(A,left_index,right_index):
 	"""
-	A: list of integers
+	A: list of integers, no repitition of numbers assumed
 	left_index: left index of subarray of A to be sorted
 	right_index: right index of subarray of A to be sorted
 
 	returns: nothing, sorts subarray of A identified by left_index and 
 	right_index in increasing order
 	"""
-	# print('at top of quickSort Array to be sorted is',A[left_index:right_index+1])
+	global comparisonCount # GLOBAL
+	comparisonCount = comparisonCount + right_index-left_index
 	if (right_index - left_index == 0): 
 		return
 	else:
 		# Choose pivot index
-		pivot_index = left_index
+		pivot_index = choosePivotIndex(A,left_index,right_index,'first')		
 		# Get lists of bigger and smaller items and final position of pivot
 		pivot_new_index = partition(A,left_index,right_index,pivot_index)
 		# Recursively sort elements smaller than the pivot 
@@ -83,6 +106,9 @@ def quickSort(A,left_index,right_index):
 		# (assume pivotNewIndex + 1 does not overflow)
 		if pivot_new_index + 1 <= right_index:
 			quickSort(A, pivot_new_index + 1, right_index)
+
+def countComparisons():
+	print comparisonCount
 
 def test1():
 	test_list = [3,8,2,5,1,4,7,6]
@@ -97,5 +123,6 @@ def test2():
 
 
 if __name__ == "__main__":
-	test1()
+	#test1()
 	test2()
+	countComparisons()
