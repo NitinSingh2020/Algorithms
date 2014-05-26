@@ -119,7 +119,13 @@ def test1():
 def test2():
 	number_list = loadNumbers()
 	quickSort(number_list,0,9999)
-	print number_list	
+	print number_list
+
+# Answers are:
+# size    first     last      median
+# 10       25        29        21
+# 100     615       587        518
+# 1000   10297     10184       8921
 
 
 if __name__ == "__main__":
