@@ -187,7 +187,7 @@ if __name__ == "__main__":
 
     print("Brute force on testList1", countInv(TEST_LIST_1, 7))
     print("Brute force on testList2", countInv(TEST_LIST_2, 6))
-    # print('Brute force on text file', CountInv(loadNumbers(), 100000))
+    # print('Brute force on text file', countInv(loadNumbers(), 100000))
 
     print("Fast way on testList1", sortAndCount(TEST_LIST_1, 7)) # Infinite loop
     print("Fast way on testList2", sortAndCount(TEST_LIST_2, 6))
